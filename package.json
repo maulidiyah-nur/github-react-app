@@ -26,8 +26,7 @@
     "android": "react-native-scripts android",
     "ios": "react-native-scripts ios",
     "test": "yarn jest && flow && eslint .",
-    "jest": "node node_modules/jest/bin/jest.js",
-    "precommit": "yarn test"
+    "jest": "node node_modules/jest/bin/jest.js"
   },
   "jest": {
     "preset": "jest-expo",
@@ -37,6 +36,7 @@
   },
   "dependencies": {
     "expo": "^27.1.0",
+    "github-api": "^3.0.0",
     "lodash": "^4.17.11",
     "mobx": "3.4.1",
     "mobx-react": "4.3.5",
