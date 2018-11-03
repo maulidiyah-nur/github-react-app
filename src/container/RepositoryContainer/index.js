@@ -18,9 +18,11 @@ export default class RepositoryContainer extends React.Component {
         this.props.navigation.goBack();
     }
 
-    logout = () => {
-        this.props.store.logout();
-        this.props.navigation.navigate("Username");
+    logout = async () => {
+        await this.props.store.logout();
+        if (this.props.store.profile === null) {
+			this.props.navigation.navigate("Username");
+		}
     }
 
 	render() {
@@ -34,7 +36,7 @@ export default class RepositoryContainer extends React.Component {
                 </Left>
                 <Body>
                     <Title style={style.headerTitle}>List of Commits</Title>
-                    <Subtitle style={style.headerTitle} numberOfLines={1}>{this.props.store.repository.full_name}</Subtitle>
+                    <Subtitle style={style.headerTitle} numberOfLines={1}>{this.props.store.repository && this.props.store.repository.full_name}</Subtitle>
                 </Body>
                 <Right>
                     <Button transparent onPress={() => { this.logout(); }}>

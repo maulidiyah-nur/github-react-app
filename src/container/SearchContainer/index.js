@@ -37,9 +37,11 @@ class SearchContainer extends React.Component {
 		}
 	};
 
-	logout = () => {
-        this.props.store.logout();
-        this.props.navigation.navigate("Username");
+	logout = async () => {
+		await this.props.store.logout();
+		if (this.props.store.profile === null) {
+			this.props.navigation.navigate("Username");
+		}
     }
 
 	renderButton = {

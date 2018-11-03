@@ -1,4 +1,5 @@
 import { observable, action } from "mobx";
+import { AsyncStorage } from "react-native";
 import GitHub from "github-api";
 
 class Store {
@@ -7,10 +8,10 @@ class Store {
 
     @observable username = "";
     @observable password = "";
-    @observable profile = {};
+    @observable profile = null;
 
     @observable keyword = "facebook/react-native";
-    @observable repository = {};
+    @observable repository = null;
     @observable commits = [];
 
     @action
@@ -20,8 +21,11 @@ class Store {
             password: this.password
         });
         const user = gh.getUser(this.username);
-        await user.getProfile((err, res) => {
+        await user.getProfile(async(err, res) => {
             if (err === null && res) {
+                await AsyncStorage.setItem("username", this.username);
+                await AsyncStorage.setItem("password", this.password);
+                await AsyncStorage.setItem("profile", JSON.stringify(res));
                 this.error = false;
                 this.profile = res;
                 this.errorMessage = "";
@@ -33,16 +37,20 @@ class Store {
     }
 
     @action
-    logout() {
+    async logout() {
         this.error = false;
         this.errorMessage = "";
 
         this.username = "";
         this.password = "";
-        this.profile = {};
+        this.profile = null;
+
+        await AsyncStorage.removeItem("username");
+        await AsyncStorage.removeItem("password");
+        await AsyncStorage.removeItem("profile");
 
         this.keyword = "facebook/react-native";
-        this.repository = {};
+        this.repository = null;
         this.commits = [];
     }
 
@@ -67,7 +75,7 @@ class Store {
                         if (_err === null && _res) {
                             this.commits = _res;
                         }
-                    })
+                    });
                 } else {
                     this.error = true;
                     this.errorMessage = "Repository not found";

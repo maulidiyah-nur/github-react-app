@@ -1,6 +1,7 @@
 // @flow
 import React from "react";
 import Simple from "../../components/SimpleScreen/SimpleScreen";
+import { AsyncStorage } from "react-native";
 import { observer, inject } from "mobx-react";
 import { observable } from "mobx";
 import PropTypes from "prop-types";
@@ -15,10 +16,18 @@ class UsernameContainer extends React.Component {
 		navigation: PropTypes.shape()
 	}
 
-	componentWillMount() {
-		if (this.props.store.profile !== {}) {
-			this.props.navigation.navigate("Drawer");
-		}
+	async componentWillMount() {
+		const store = this.props.store;
+		AsyncStorage.getItem("profile").then(async (profile) => {
+			if (profile !== null){
+				store.username = await AsyncStorage.getItem("username");
+				store.password = await AsyncStorage.getItem("password");
+				await store.login();
+				if (!store.error){
+					this.props.navigation.navigate("Drawer");
+				}
+			} 
+		});     
 	}
 
 	renderForm = {
