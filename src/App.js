@@ -3,8 +3,8 @@ import React from "react";
 import { StackNavigator, DrawerNavigator } from "react-navigation";
 import { Root } from "native-base";
 
-import Username from "./container/UsernameContainer";
-import Password from "./container/PasswordContainer";
+import Username from "./container/UsernameContainer/Username";
+import Password from "./container/PasswordContainer/Password";
 
 import Search from "./container/SearchContainer";
 import Repository from "./container/RepositoryContainer";
