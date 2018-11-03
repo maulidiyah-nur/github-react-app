@@ -1,12 +1,9 @@
-import RepositoryStore from "../store/RepositoryStore/RepositoryStore";
-import UserStore from "../store/UserStore/UserStore";
+import Store from "../store/Store";
 
 export default function() {
-	const repositoryStore = new RepositoryStore();
-	const userStore = new UserStore();
+	const store = new Store();
 
 	return {
-		userStore,
-		repositoryStore,
+		store
 	};
 }

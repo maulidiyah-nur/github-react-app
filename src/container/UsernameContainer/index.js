@@ -1,17 +1,17 @@
 // @flow
 import React from "react";
-import Login from "../../components/LoginScreen/LoginScreen";
+import Simple from "../../components/SimpleScreen/SimpleScreen";
 import { observer, inject } from "mobx-react";
 import { observable } from "mobx";
 import PropTypes from "prop-types";
 
-@inject("userStore")
+@inject("store")
 @observer
 class UsernameContainer extends React.Component {
 	@observable loginButton = undefined;
 
 	static propTypes = {
-		userStore: PropTypes.shape(),
+		store: PropTypes.shape(),
 		navigation: PropTypes.shape()
 	}
 
@@ -19,15 +19,13 @@ class UsernameContainer extends React.Component {
 		label: "your username",
 		secureTextEntry: false,
 		onChange: (value) => {
-			this.props.userStore.username = value;
+			this.props.store.username = value;
 			if (value.length > 0) {
 				this.loginButton = this.renderButton;
 			} else {
 				this.loginButton = undefined;
 			}
-		},
-		error: this.props.userStore.error,
-		errorMessage: this.props.userStore.errorMessage
+		}
 	};
 
 	renderHeader = {
@@ -49,10 +47,14 @@ class UsernameContainer extends React.Component {
 
 	render() {
 		return (
-			<Login
-				loginForm={this.renderForm}
-				loginButton={this.loginButton}
-				loginHeader={this.renderHeader}/>
+			<Simple
+				status={{
+					error: this.props.store.error,
+					errorMessage: this.props.store.errorMessage
+				}}
+				form={this.renderForm}
+				button={this.loginButton}
+				header={this.renderHeader}/>
         );
 	}
 }

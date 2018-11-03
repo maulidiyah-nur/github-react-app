@@ -1,17 +1,17 @@
 // @flow
 import React from "react";
-import Login from "../../components/LoginScreen/LoginScreen";
+import Simple from "../../components/SimpleScreen/SimpleScreen";
 import { observer, inject } from "mobx-react";
 import { observable } from "mobx";
 import PropTypes from "prop-types";
 
-@inject("userStore")
+@inject("store")
 @observer
 class PasswordContainer extends React.Component {
 	@observable loginButton = undefined;
 
 	static propTypes = {
-		userStore: PropTypes.shape(),
+		store: PropTypes.shape(),
 		navigation: PropTypes.shape()
 	}
 
@@ -19,7 +19,7 @@ class PasswordContainer extends React.Component {
         label: "your password",
         secureTextEntry: true,
 		onChange: (value) => {
-			this.props.userStore.password = value;
+			this.props.store.password = value;
 			if (value.length > 0) {
 				this.loginButton = this.renderButton;
 			} else {
@@ -52,9 +52,9 @@ class PasswordContainer extends React.Component {
 	};
 
 	login = async () => {
-        const userStore = this.props.userStore;
-        await userStore.login();
-        if (userStore.error){
+        const store = this.props.store;
+        await store.login();
+        if (store.error){
             this.props.navigation.navigate("Username");
         } else {
             this.props.navigation.navigate("Drawer");
@@ -63,10 +63,10 @@ class PasswordContainer extends React.Component {
 
 	render() {
 		return (
-			<Login
-				loginForm={this.renderForm}
-				loginButton={this.loginButton}
-				loginHeader={this.renderHeader}/>
+			<Simple
+				form={this.renderForm}
+				button={this.loginButton}
+				header={this.renderHeader}/>
         );
 	}
 }

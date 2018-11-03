@@ -16,12 +16,10 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent"
     },
     headerTitle: {
-        color: "#FFFFFF",
         fontSize: 40,
         marginRight: 50
     },
     headerSubTitle: {
-        color: "#FFFFFF",
         fontSize: 13,
         marginRight: 50
     },
@@ -29,9 +27,6 @@ const styles = StyleSheet.create({
         marginVertical: 30,
         marginLeft: 0,
         paddingRight: 0
-    },
-    inputChild: {
-        color: "#FFFFFF"
     },
     button: {
         display: "flex",
