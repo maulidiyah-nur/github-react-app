@@ -15,6 +15,12 @@ class UsernameContainer extends React.Component {
 		navigation: PropTypes.shape()
 	}
 
+	componentWillMount() {
+		if (this.props.store.profile !== {}) {
+			this.props.navigation.navigate("Drawer");
+		}
+	}
+
 	renderForm = {
 		label: "your username",
 		secureTextEntry: false,

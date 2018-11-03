@@ -34,7 +34,7 @@ export default class RepositoryContainer extends React.Component {
                 </Left>
                 <Body>
                     <Title style={style.headerTitle}>List of Commits</Title>
-                    <Subtitle style={style.headerTitle}>{this.props.store.repository.full_name}</Subtitle>
+                    <Subtitle style={style.headerTitle} numberOfLines={1}>{this.props.store.repository.full_name}</Subtitle>
                 </Body>
                 <Right>
                     <Button transparent onPress={() => { this.logout(); }}>
@@ -46,10 +46,16 @@ export default class RepositoryContainer extends React.Component {
                 <List>
                     {
                         this.props.store.commits.map((c) => {
+                            let thumbnail = c.author && c.author.avatar_url ? c.author.avatar_url : (c.committer && c.committer.avatar_url ? c.committer.avatar_url : "");
+                            if (thumbnail === "") {
+                                thumbnail = require("../../../assets/loading.png");
+                            } else {
+                                thumbnail = { uri: thumbnail };
+                            }
                             return (
                                 <ListItem thumbnail key={c.sha}>
                                     <Left>
-                                        <Thumbnail r source={{ uri: (c.author && c.author.avatar_url ? c.author.avatar_url : c.committer.avatar_url) }} />
+                                        <Thumbnail r source={thumbnail} />
                                     </Left>
                                     <Body>
                                         <Text>{c.commit.author.name}</Text>
